@@ -578,6 +578,13 @@ cc_library_shared {
         "android.media.audio.common.types-V5-cpp",
         "audioclient-types-aidl-cpp",
         "libaudioclient",
+        // libwfdservice_shim.cpp:36 calls AudioSystem::setDeviceConnectionState.
+        // In 23.2 AudioSystem.cpp was a src of libaudioclient; in 24.0 it moved to
+        // libaudiobase, and the symbol is no longer exported from libaudioclient.
+        // Without this the link fails under -Wl,--no-undefined with
+        //   undefined symbol: _ZN7android11AudioSystem24setDeviceConnectionStateE...
+        // libaudiobase is needed; a DT_NEEDED from libaudioclient does not help.
+        "libaudiobase",
         "libaudiofoundation",
         "libutils",
     ],
