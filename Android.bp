@@ -265,6 +265,25 @@ cc_prebuilt_library_shared {
     compile_multilib: "both",
 }
 
+cc_prebuilt_library_shared {
+    name: "libssl-v33",
+    vendor: true,
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm: {
+            srcs: ["vndk/v33/arm/libssl-v33.so"],
+            shared_libs: ["libcrypto-v33"],
+        },
+        android_arm64: {
+            srcs: ["vndk/v33/arm64/libssl-v33.so"],
+            shared_libs: ["libcrypto-v33"],
+        },
+    },
+    compile_multilib: "both",
+}
+
 cc_library {
     name: "libcrypto_shim",
     srcs: [
